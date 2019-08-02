@@ -1,0 +1,37 @@
+<div class="container" align="center">
+ <div class="span6 offset3" ng-controller="summaryController">
+   <form action="" method="post" name="analyse" style="margin-top:20px;"  >
+    <h1 style="color: #00ff00;font-family: 'Times New Roman', Times, serif"><b>Welcome In Automatic Text Summarizer</b></h1>
+    <table>
+      <tr>
+        <p style="font-family: 'Sofia';font-size: 22px;">"Input the page url and get summary quickly:"</p>
+        <textarea id="url" ng-model="source.sourceUrl" maxlength="1000" name="url" placeholder="URL must start with &#x27;http://&#x27; or &#x27;https://&#x27;, support English language only" size="500" required=""></textarea>
+
+        <input class = "btn btn-primary btn-large" ng-click="getSourceContent()" style="margin-bottom: 30px; margin-left: 10px;height:40px;" type="submit" value="Enter"/>
+        
+        <p style="margin-top: -30px">Or Copy and paste your text into the box:</p>
+        <textarea id="textBox" ng-model="source.sourceText" maxlength="50000" name="text" size="5000" required=""></textarea>
+
+        <p>Type the summarized sentence number you need:</p>
+            <input id="sentenceNum" ng-model="source.sentenceNumber" maxlength="100" name="sentnum" placeholder="Number Need" size="50" type="text" value="6">
+            <p></p>
+       </tr>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+      
+    </table>
+  </form>
+
+  <input class = "btn btn-primary btn-large" ng-click="summarizer()" type="submit" value="Summarize Now">
+  
+  <table>
+    <tr>
+      <td>
+        <textarea id="summary" ng-show="isSummary==true" maxlength="50000" name="text" size="5000" style="width:600px;height:250px;" required="">{{myFinal}}</textarea>
+      </td>
+    </tr> 
+ </table>
+</div>
+</div>

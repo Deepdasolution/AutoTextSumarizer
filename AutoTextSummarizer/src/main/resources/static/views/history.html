@@ -1,0 +1,106 @@
+  <div class="container bg-light">
+    <div class="card" style="margin-left: -15px; margin-right: -15px; margin-top: 20px; margin-bottom: -10px; height: 70px;">
+      <div class="card-body">
+        <h5 class="card-title" style="margin-top: -10px;"><span style="color: blue;">History</span></h5>
+        <p class="card-text" style="margin-top: -8px;">Your History</p>
+      </div>
+    </div>
+
+
+    <!--search and kachyak kuchuk thau-->
+
+    <div style="margin-top: 15px;">
+     <div class="input-group" style="margin-left: -15px; margin-right: -1075px; ">
+      <input type="text" placeholder="Search....." style="margin-left: 20px;">
+      <div class="input-group-append">
+        <button class="btn btn-secondary" type="button">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+
+      <div style="margin-left: 710px;">
+        <p>Show Results</p>
+      </div>
+      <div class="dropdown">
+        <div class="col-sm-3">
+          <select>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+
+  <!--end -->
+
+  <div class="card" style="margin-top: 8px; margin-left: -15px; margin-right: -15px;">
+   <div class="card-title">
+    <table class="table">
+      <thead>
+        <tr>
+         <th scope="col">SNo.</th>
+         <th scope="col">SOURCE TYPE</th>
+         <th scope="col">SOURCE</th>
+         <th scope="col">SUMMARY</th>
+         <th scope="col">TIME CONSUME</th>
+         <th scope="col">Actions</th>
+       </tr>
+     </thead>
+     <tbody ng-show="histories.length > 0">
+      <tr>
+        <th scope="row">{{histories.id}}</th>
+        <td>{{histories.type}}</td>
+        <td>{{histories.inputText}}</td>        
+        <td>{{histories.summary}}</td>
+        <td>{{histories.timeConsumed}}</td>
+        <td><i class="far fa-edit" id="editOpt"></i>
+         <i class="far fa-times-circle" id="wrong"></i></td>
+       </tr>
+
+       </tbody>
+     </table>
+   </div>
+
+
+ </div>
+ 
+
+ <!--footer-->
+ <div class="card" style="margin-left: -15px; margin-right: -15px; margin-top: -5px;">
+   <div class="card-footer" style="background-color: #FFFFFF; height: 130px;">
+
+    <!--previous next starts-->
+    <nav aria-label="..." style="margin-left: 850px; margin-bottom: -40px;">
+      <ul class="pagination">
+        <li class="page-item disabled">
+          <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active">
+          <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#">Next</a>
+        </li>
+      </ul>
+    </nav>
+    <!--prevs nxt ends-->
+
+    <p class="card-text" style="margin-top:30px; margin-bottom: -15px;">Related Actions</p>
+    <br />
+    <button class="btn btn-sm bg-white" style="border-color: blue; border-width: 2px;">Share</button>
+    <button class="btn btn-sm bg-white" style="border-color: blue; border-width: 2px; margin-left: 20px;">Clear</button>
+    <button class="btn btn-sm bg-white" style="border-color: blue; border-width: 2px; margin-left: 20px;">Encrypt</button>
+  </div>
+</div>
+<!--footer end-->
+</div>
+</div>

@@ -1,0 +1,150 @@
+ body{
+         background-image:url("../images/h.jpg");
+         background-size:cover;
+
+       }
+
+       .dropdown:hover>.dropdown-menu {
+        animation-name: slidenavAnimation;
+        animation-duration:.2s;
+        animation-iteration-count: 1;
+        animation-timing-function: ease;
+        animation-fill-mode: forwards;
+        
+        -webkit-animation-name: slidenavAnimation;
+        -webkit-animation-duration:.2s;
+        -webkit-animation-iteration-count: 1;
+        -webkit-animation-timing-function: ease;
+        -webkit-animation-fill-mode: forwards;
+        
+        -moz-animation-name: slidenavAnimation;
+        -moz-animation-duration:.2s;
+        -moz-animation-iteration-count: 1;
+        -moz-animation-timing-function: ease;
+        -moz-animation-fill-mode: forwards;
+      }
+      @keyframes slidenavAnimation {
+        from {
+          -webkit-transform: scale(0.5);
+        }
+        to {
+          -webkit-transform: scale(1);
+        }
+      }
+      @-webkit-keyframes slidenavAnimation {
+        from {
+          -webkit-transform: scale(0.5);
+        }
+        to {
+          -webkit-transform: scale(1);
+        }
+      }   
+     #or{
+     width: 100%; 
+     text-align: center; 
+     border-bottom: 1px solid #ddd; 
+     line-height: 0.1em;
+     margin: 10px 0 20px; 
+     color: #9e9e9e;
+   } 
+
+   #or span { 
+    background:#fff; 
+    padding:0 10px; 
+  }
+  
+  .box .inputBox{
+    position: relative;
+  }
+  .box .inputBox input{
+    width: 100%;
+    padding: 10px 0;
+    color: #212121;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    margin-bottom: 30px;
+    border:none;
+    outline: none;
+    border-bottom:1px solid #ddd;
+    background: transparent;
+  }
+
+  .box .inputBox label{
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 18px;
+    color: #9e9e9e;
+    pointer-events: none;
+    font-weight: 400;
+    transition: .5s;
+  }
+  .box .inputBox input:focus{
+    border-bottom: 2px solid #55aa29;
+  }
+
+  .box .inputBox input:focus ~ label,
+  .box .inputBox input:valid ~ label{
+    top: -18px;
+    left: 0;
+    color: #55aa29;
+    font-size: 12px;
+  }
+  
+   .box .inputBox input[type=email].ng-touched ~ label{
+    top: -18px;
+    left: 0;
+    color: #55aa29;
+    font-size: 12px;
+  }
+ 
+
+  .box .inputBox input.ng-touched{
+      background-image: url("../images/exit1.png");
+      background-position: right top;
+      background-repeat: no-repeat;
+      border-bottom:1px solid red;
+}
+
+
+ .box .inputBox input.ng-valid 
+ {
+    background-image: url("../images/confirm1.png");
+    background-position: right top;
+    background-repeat: no-repeat;
+    border-bottom:1px solid #55aa29;
+  }
+
+ /* For Url Text Box CSS*/
+#url{  
+
+      width:600px;height:40px;
+      padding:5px 10px;
+      text-align: center;
+      background: transparent;
+      border-radius: 5px;
+      background-color: rgba(255,255,255,.7)
+}
+
+ /* For Source Text Box CSS*/
+#textBox,#summary{
+  width:600px;height:250px;
+  background-color:rgba(255,255,255,0.8);
+  text-align: justify; padding: 20px 30px;
+  font-family: 'Times New Roman', Times, serif;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+/* For Sentence Number CSS*/
+#sentenceNum{
+  width:110px;
+  height:30px;
+  background-color:rgba(255,255,255,0.8);
+  font-size: 15px;
+  padding:6px 4px;
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+
+}
