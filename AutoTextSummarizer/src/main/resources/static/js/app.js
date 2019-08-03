@@ -7,14 +7,14 @@
  app.config(function($routeProvider, $locationProvider) {
         $routeProvider
         .when("/", {
-            templateUrl : "views/home.html"
+            templateUrl : "views/index.html"
         })
         .when("/home", {
             templateUrl : "views/home.html"
         })
-        .when("/login", {
-            templateUrl : "views/home.html"
-        })
+//        .when("/login", {
+//            templateUrl : "views/login.html"
+//        })
         .when("/logout-success", {
             templateUrl : "views/home.html"
         })
@@ -24,6 +24,9 @@
         .when("/history", {
             templateUrl : "views/history.html"
         });
+//        .otherwise(({
+//                     redirectTo: '/'
+//         }));
         //$locationProvider.hashPrefix('');
         $locationProvider.html5Mode(true);
     });
@@ -70,7 +73,7 @@
 
   var loginController=function($scope,$rootScope,$http){
     $scope.user = {};
-
+    console.log('Hello Sign in!!!');
     $scope.userLogin=function(user)
     {
       //For Testing Purpose Only
