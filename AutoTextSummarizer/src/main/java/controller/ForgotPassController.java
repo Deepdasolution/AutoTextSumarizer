@@ -1,6 +1,7 @@
 package controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,10 @@ import services.ForgotPasswordService;
 @RequestMapping(value="ats")
 public class ForgotPassController{
 
+	
+	@Autowired
+	BCryptPasswordEncoder bcryptPasswordEncoder;
+	
 	@Autowired
 	UserRepository userRepository;
 	
@@ -23,13 +28,15 @@ public class ForgotPassController{
 
 	@RequestMapping(value="/forgotpassword/{toemail}", method=RequestMethod.GET)
 	public String forgotPassword(@PathVariable String toemail) {
-		User uemail = userRepository.findByUserEmail(toemail);
-		if(uemail == null) {	
-			return "Sorry Email is Incorrect";
+		User user = userRepository.findByUserEmail(toemail);
+		if(user != null) {
+			String pass=bcryptPasswordEncoder.encode(user.getUserPass());
+			return forgotPasswordService.sendMail(toemail,pass);
 			}
 		
 		else {
-			return forgotPasswordService.sendMail(toemail);
+			return "Invalid Email!!";
+			
 			}
 		}
 }

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -28,48 +29,46 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
-//	@Bean
-//	public AuthenticationProvider authProvider()
-//	{
-//		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//		provider.setUserDetailsService(userDetailsService);
-//		provider.setPasswordEncoder(new BCryptPasswordEncoder());
-//		return provider;
-//	}
-
-	
-//	@Override
-//	public void configure(WebSecurity web) throws Exception {
-//	    web.ignoring().antMatchers("/resources/**","/static/**","/css/**","/js/**");
-//	}
+	@Bean
+	public AuthenticationProvider authProvider()
+	{
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setUserDetailsService(userDetailsService);
+		provider.setPasswordEncoder(new BCryptPasswordEncoder());
+		return provider;
+	}
+//
 //	
+//	 @Override
+//	  public void configure(AuthenticationManagerBuilder builder)
+//	          throws Exception {
+//	      builder.inMemoryAuthentication()
+//	             .withUser("dip@gmail.com")
+//	             .password("{noop}123")
+//	             .roles("USER");
+//	  }
 	
-//	@Override
-//	protected void configure(HttpSecurity http) throws Exception {
+	
 //	
-//		http
-//			.authorizeRequests()
-//				.anyRequest()
-//				.permitAll()
-//				.and()
-//				.httpBasic();
-//		
-//		http.csrf().disable();
-//		
-//		
+//	public UserDetailsService userdetailsser() {
+//		List<UserDetails> user= new ArrayList<>();
+//		user.add(User.withDefaultPasswordEncoder().username("dip@gmail.com").password("Dai").roles("USER").build());
+//		return new InMemoryUserDetailsManager(user);
 //	}
-	
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	
 		http
 			.authorizeRequests()
-				.antMatchers("/login","/home").permitAll()
-				.anyRequest().fullyAuthenticated()
+				.antMatchers("/history").authenticated()
+//				.anyRequest().authenticated()
+				.anyRequest().permitAll()
 				.and()
 			.formLogin()
-				.loginPage("/login").permitAll()
+				.loginPage("/test").permitAll()
+				.defaultSuccessUrl("/home", true)
+		        .failureUrl("/login?error=true")
 				.and()
 			.logout().invalidateHttpSession(true)
 				.clearAuthentication(true)
@@ -80,20 +79,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		
 	}
-//	
-//	@Bean
-//	public BCryptPasswordEncoder encodePass() {
-//		return new BCryptPasswordEncoder();
-//	}
 	
-//	@Bean
-//	@Override
-//	protected UserDetailsService userDetailsService() {
-//		List<UserDetails> users= new ArrayList<>();
-//		users.add(User.withDefaultPasswordEncoder().username("deep").password("dai").roles("USER").build());
-//		return new InMemoryUserDetailsManager(users);
-//		
-//	}
+	@Bean
+	public BCryptPasswordEncoder encodePass() {
+		return new BCryptPasswordEncoder();
+	}
+	
 
 }
 

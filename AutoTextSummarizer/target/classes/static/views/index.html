@@ -48,7 +48,7 @@
          <!-- Dropdown -->
          <li ng-show="loggedIn==true" class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" class="pull-right" id="navbardrop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:white">
-           <b>Hello {{helloUser}}</b></a>
+           <b>Hello {{user.userFullname}}</b></a>
 
            <div class="dropdown-menu">
             <a class="dropdown-item" href="#"> <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400" style="color: blue"></i>Profile</a>
@@ -72,7 +72,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <div class="box" style="padding:25px;padding-top:25px">
             <p></p>
-            <form name="myLoginForm">
+             <form name="myLoginForm">
              <div class="form-group">
               <h4 class="modal-title" style="
               font-weight: 500;
@@ -330,6 +330,7 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-cookies.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

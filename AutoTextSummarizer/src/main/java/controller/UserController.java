@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import models.Summary;
 import models.User;
 import repository.UserRepository;
+import services.SummaryService;
 import services.UserService;
 import summarizer.Summarizer;
 
@@ -28,6 +29,9 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	SummaryService summaryService;
 	
 	//Select all from table
 	@GetMapping("/users")
@@ -46,7 +50,7 @@ public class UserController {
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public User login(@RequestBody User user) {
 		System.out.println(user.getUserEmail());
-		User u = userRepository.findByUserEmail(user.getUserEmail());
+		User u = userService.findByUserEmail(user.getUserEmail(),user.getUserPass());
 		if(u==null)
 		{
 			System.out.println("Sorry Not Logged In");
@@ -69,26 +73,7 @@ public class UserController {
 	@RequestMapping(value="/getcontent", method=RequestMethod.POST)
 	public Summary getSourceContent(@RequestBody Summary summary)
 	{
-		String url=summary.getSourceUrl();
-		System.out.println("Url: "+url);
-		String a="";
-		try {
-	      Document document = Jsoup.connect(url).get();
-	     // System.out.println(document.title());
-	    
-	      String html =String.valueOf(document.body());
-	      Document doc = Jsoup.parse(html);
-	      System.out.println(doc.title());
-	      Elements paragraphs = doc.getElementsByTag("p");
-	      a=paragraphs.text();
-	     }catch(Exception e)
-			{
-				System.out.println("Error aayo"+e);
-				
-			}
-		System.out.println(a);
-		summary.setSummary(a);
-		return summary;
+		return summaryService.getSourceContent(summary);
 	}
 	
 	@RequestMapping(value="/summary", method=RequestMethod.POST)

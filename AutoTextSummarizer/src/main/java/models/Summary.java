@@ -12,10 +12,11 @@ public class Summary {
 	@Id
 	private String sourceUrl;
 	private String sourceText;
-	private String summary;
 	private int sentenceNumber;
 	private boolean IsID;
 	private String jpt;
+	
+	private ArrayList<String> finalSummary= new ArrayList<>();
 		
 	public String getJpt() {
 		return jpt;
@@ -29,8 +30,6 @@ public class Summary {
 	public void setIsID(boolean isID) {
 		this.IsID = isID;
 	}
-	private ArrayList<String> finalSummary= new ArrayList<>();
-	
 	
 	public ArrayList<String> getFinalSummary() {
 		return finalSummary;
@@ -43,12 +42,6 @@ public class Summary {
 	}
 	public void setSentenceNumber(int sentenceNumber) {
 		this.sentenceNumber = sentenceNumber;
-	}
-	public String getSummary() {
-		return summary;
-	}
-	public void setSummary(String summary) {
-		this.summary = summary;
 	}
 	public String getSourceUrl() {
 		return sourceUrl;

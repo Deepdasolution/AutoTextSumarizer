@@ -14,17 +14,17 @@ import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
 
 import org.springframework.stereotype.Service;
-// Programmmer:Dipak Banb
+
 @Service
 public class ForgotPasswordService {
 
-	public String sendMail(String email)
+	public String sendMail(String email,String pass)
 	{
 		String to=email;
 		String from="diplove32928@gmail.com";
+		
 		try{
-			   	
-				String fetchedPassword ="Password123";  
+				String fetchedPassword =pass;  
 				final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 				
 				Properties props = System.getProperties();
@@ -45,7 +45,7 @@ public class ForgotPasswordService {
 			                     return new PasswordAuthentication(username, password);
 					              }});
 
-//			   // -- Create a new message --
+			   // -- Create a new message --
 			     Message msg = new MimeMessage(session);
 
 			  // -- Set the FROM and TO fields --
@@ -57,10 +57,10 @@ public class ForgotPasswordService {
 			     msg.setSentDate(new Date());
 			     Transport.send(msg);
 			     System.out.println("Message Send Successfully");
-			     return "Message Send Successfully";
+			     return "Password was send successfully, please check your email";
 			}catch(Exception e)
 			{
-				 return ("Sorry Message can't sent, Try Again: Error "+e);
+				 return ("Sorry email can't sent, Try Again: Error "+e);
 			}
 		  
 	}

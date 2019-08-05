@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -16,19 +17,26 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-//	@Autowired
-//    private BCryptPasswordEncoder encoder; 
-//	
+	@Autowired
+    private BCryptPasswordEncoder encoder; 
+	
 	@Autowired
     UserService(UserRepository userRepository) {
       this.userRepository = userRepository;
             
     }
 	
-	public User findByUserEmail(String userEmail) {
+	public User findByUserEmail(String userEmail,String userPass) {
 		User user = userRepository.findByUserEmail(userEmail);
-		return user;
+		if(user!=null) {
+			if(encoder.matches(userPass, user.getUserPass())) {
+				return user;
+			}
+		}
+		
+		return null;
 	}
+	
 	
 	public Optional<User> getUser(Integer Id) {
         return userRepository.findById(Id);
@@ -37,7 +45,7 @@ public class UserService {
 	
 	//Create New User
     public boolean createUser(User user) {
-    	//user.setUserPass(encoder.encode(user.getUserPass()));
+    	user.setUserPass(encoder.encode(user.getUserPass()));
         User savedUser = userRepository.save(user);
         return true;
     }

@@ -1,4 +1,4 @@
- var app=angular.module("AutoTextSummarizer",["ngRoute"]);
+ var app=angular.module("AutoTextSummarizer",["ngRoute", 'ngCookies']);
 
  app.run(['$rootScope', function($rootScope) {
         $rootScope.API_URL = 'http://localhost:8080';
@@ -12,15 +12,6 @@
         .when("/home", {
             templateUrl : "views/home.html"
         })
-        .when("/login", {
-            templateUrl : "views/home.html"
-        })
-        .when("/logout-success", {
-            templateUrl : "views/home.html"
-        })
-         .when("/logout", {
-            templateUrl : "views/home.html"
-        })
         .when("/history", {
             templateUrl : "views/history.html"
         });
@@ -29,18 +20,49 @@
     });
 
 
-  app.controller("AtsController",function($scope, $rootScope,$http){
-     $rootScope.loggedIn=false;
-     $rootScope.isSummary=false;
-     $rootScope.helloUser="";
-     $rootScope.mysummary="";
+  app.controller("AtsController", ['$scope', '$rootScope', '$http', '$cookies', '$cookieStore', function($scope, $rootScope,$http,$cookies,$cookieStore, $timeout){
+     
+    $rootScope.resetSession = function(){
+	        $rootScope.loggedIn = false;
+	        $rootScope.userId = false;
+	        $rootScope.user = {}
+	        $cookieStore.put('loggedIn', $rootScope.loggedIn);
+	        $cookieStore.put('userId', $rootScope.userId);
+	        $cookieStore.put('user', $rootScope.user);
+	    }
 
+	   // Cookies 
+	    $rootScope.loggedIn = $cookieStore.get('loggedIn');
+	    $rootScope.userId = $cookieStore.get('userId');
+	    $rootScope.user = $cookieStore.get('user');
+	
+	    console.log('login', $rootScope.loggedIn);
+	    
+	    if(typeof($rootScope.loggedIn) === 'undefined'||$rootScope.loggedIn==false){
+	        $rootScope.resetSession()
+	
+	    }else{
+	    	$http.get($rootScope.API_URL+'/ats/user/'+$rootScope.userId).then(function(response){
+	                var id = response.data.id;
+	                if (typeof(id) !== 'undefined'){
+	                    $rootScope.user = response.data;
+	                    $rootScope.loggedIn = true;
+	                    $rootScope.userId = response.data.id;
+	                    $cookieStore.put('loggedIn', $rootScope.loggedIn);
+	                    $cookieStore.put('userId', $rootScope.userId);
+	                    $cookieStore.put('user', $rootScope.user);
+	                }else{
+	                    //alert('no user')
+	                }
+	        });
+	
+	    }
      $scope.logout=function()
       {
-         var retVal = confirm("Are You Aure to Logout ?");
+         	var retVal = confirm("Are You Aure to Logout ?");
                  if( retVal == true ) {
-                    $scope.loggedIn=false;
-                    return true;
+                	 $rootScope.resetSession();
+                     return true;
                  } else {
                     $scope.loggedIn=true;
                     return false;
@@ -66,64 +88,68 @@
               });
        }
   
-   });
+   }]);
 
-  var loginController=function($scope,$rootScope,$http){
-    $scope.user = {};
+  var loginController=function($scope,$http,$rootScope, $cookies, $cookieStore){
+	    $scope.user = {};
+	    console.log('Hello Log in controller!!!');
+	    $scope.userLogin=function(user)
+	    {
+	      console.log('Hello Login');
+	      var user=$scope.user;
+	      console.log(user);
+	      alert(user.userEmail);
 
-    $scope.userLogin=function(user)
-    {
-      //For Testing Purpose Only
-      console.log('Hello Login');
-      var user=$scope.user;
-      console.log(user);
-      alert(user.userEmail);
+	       $http({
+	          url:'http://127.0.0.1:8080/ats/login',
+	          method: "POST",
+	          data:user
+	        }).then(function(response){
+	                
+	                console.log(response.data);
+	                var mydata = response.data;
+	                if(mydata.userEmail==null)
+	                {
+	                  swal("Sorry!", "Incorrect username or Password !", "error");
+	                }
+	                else
+	                { 
+	                    var userid = mydata.id;
+		                console.log('logged in user : ' + userid );
+		                $rootScope.userId = userid;
+		                $rootScope.loggedIn = true;
+		                $cookieStore.put('loggedIn', $rootScope.loggedIn);   
+		                $cookieStore.put('userId', $rootScope.userId);
+		                $rootScope.helloUser=mydata.userFullname;
+		                swal("Welcome "+$rootScope.helloUser+"!", "Logging In Successful!!", "success");
+		                window.location.href = '/home';
+		             }    
+	           }, 
+	        function(response){
+	          swal("Oops!", "Error In Logging In!"+response, "warning");
+	              });
 
-       $http({
-          url:'http://127.0.0.1:8080/ats/login',
-          method: "POST",
-          data:user
-        }).then(function(response){
-                
-                console.log(response.data);
-                var mydata = response.data;
-                if(mydata.userEmail==null)
-                {
-                  swal("Sorry!", "Incorrect username or Password !", "error");
-                }
-                else
-                { 
-                  $rootScope.helloUser=mydata.userFullname;
-                  swal("Welcome "+$rootScope.helloUser+"!", "Logging In Successful!!", "success");
-                  $rootScope.loggedIn=true;
-  
-                }    
-           }, 
-        function(response){
-          swal("Oops!", "Error In Logging In!"+response, "warning");
-              });
+	    }
 
-    }
-
-     $scope.forgotPassword=function()
-      {
-        alert($scope.forgotEmail);
-        var s='http://127.0.0.1:8080/ats/forgotpassword/'+$scope.forgotEmail;
-        alert(s);
-        $http({
-            url:s,
-            method: "GET",
-        }).then(function(response){
-            var mydata = response.data;
-            alert(mydata);
-            swal("Hello", mydata, "success");
-           }, 
-        function(response){
-        	   alert(response.data);
-          //swal("Oops!", "Error In Sending Email!"+response, "warning");
-              });
-          }
-  };
+	     $scope.forgotPassword=function()
+	      {
+	        alert($scope.forgotEmail);
+	        var s='http://127.0.0.1:8080/ats/forgotpassword/'+$scope.forgotEmail;
+	        alert(s);
+	        $http({
+	            url:s,
+	            method: "GET",
+	        }).then(function(response){
+	            var mydata = response.data;
+	            alert(mydata);
+	            swal("Hello", mydata, "success");
+	           }, 
+	        function(response){
+	        	   alert(response.data);
+	          //swal("Oops!", "Error In Sending Email!"+response, "warning");
+	              });
+	          }
+	  };
 
   var signupController =  function($scope, $http){
       $scope.user = {};
@@ -131,20 +157,18 @@
       console.log('Hello Sign Up!!!');
       
       $scope.validatePassword = function(pw1, pw2){
-
-			if(pw1 != pw2){
+    	  	if(pw1 != pw2){
 				return "Two passwords not matched";
-			}
+    	  		}
 
 			if(pw1.length < 6){
 				return "Password must be at least 6 characters";
-			}
+				}
 
 			return true;
-
-
 		}
 
+      
       $scope.userSignup = function(){
     	  
         var user = $scope.user;
@@ -199,13 +223,20 @@
           method: "POST",
           data: source
         }).then(function(response){
+          console.log(response.data);
           var data=response.data;
-          console.log(response);
-          source.sourceText=data.summary;
+          console.log(response);          
+          if(data.sourceText==null){
+        	  swal("Problem!", "Please enter the valid url", "error");
+        	
+	          }
+          else
+        	  {
+	          	source.sourceText=data.sourceText;
+        	  }
         }, 
         function(response){
-          alert('Error in generating Summary' + response);
-
+        	swal("Problem!", "Error in generating summary !!!", "error");
         });
       }
 
