@@ -61,9 +61,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 		http
 			.authorizeRequests()
+<<<<<<< HEAD
 				.antMatchers("/history").authenticated()
 //				.anyRequest().authenticated()
 				.anyRequest().permitAll()
+=======
+				.antMatchers("/login","/home", "/css/custom.css", "/js/app.js").permitAll()
+				.anyRequest().fullyAuthenticated()
+>>>>>>> branch 'master' of https://github.com/Deepdasolution/AutoTextSumarizer.git
 				.and()
 			.formLogin()
 				.loginPage("/test").permitAll()

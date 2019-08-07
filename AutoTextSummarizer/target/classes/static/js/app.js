@@ -7,14 +7,29 @@
  app.config(function($routeProvider, $locationProvider) {
         $routeProvider
         .when("/", {
-            templateUrl : "views/home.html"
+            templateUrl : "views/index.html"
         })
         .when("/home", {
             templateUrl : "views/home.html"
         })
+<<<<<<< HEAD
+=======
+//        .when("/login", {
+//            templateUrl : "views/login.html"
+//        })
+        .when("/logout-success", {
+            templateUrl : "views/home.html"
+        })
+         .when("/logout", {
+            templateUrl : "views/home.html"
+        })
+>>>>>>> branch 'master' of https://github.com/Deepdasolution/AutoTextSumarizer.git
         .when("/history", {
             templateUrl : "views/history.html"
         });
+//        .otherwise(({
+//                     redirectTo: '/'
+//         }));
         //$locationProvider.hashPrefix('');
         $locationProvider.html5Mode(true);
     });
@@ -92,6 +107,7 @@
   
    }]);
 
+<<<<<<< HEAD
   var loginController=function($scope,$http,$rootScope, $cookies, $cookieStore){
 	    $scope.user = {};
 	    console.log('Hello Log in controller!!!');
@@ -131,6 +147,18 @@
 	        function(response){
 	          swal("Oops!", "Error In Logging In!"+response, "warning");
 	              });
+=======
+  var loginController=function($scope,$rootScope,$http){
+    $scope.user = {};
+    console.log('Hello Sign in!!!');
+    $scope.userLogin=function(user)
+    {
+      //For Testing Purpose Only
+      console.log('Hello Login');
+      var user=$scope.user;
+      console.log(user);
+      alert(user.userEmail);
+>>>>>>> branch 'master' of https://github.com/Deepdasolution/AutoTextSumarizer.git
 
 	    }
 
