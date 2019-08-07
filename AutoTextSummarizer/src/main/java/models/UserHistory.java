@@ -9,8 +9,10 @@ public class UserHistory {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	@Lob
 	private String source;
 	private int timeConsumed;
+	@Lob
 	private String summary;
 	
 	@ManyToOne
