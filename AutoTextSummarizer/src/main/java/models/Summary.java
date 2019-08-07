@@ -13,24 +13,18 @@ public class Summary {
 	private String sourceUrl;
 	private String sourceText;
 	private int sentenceNumber;
-	private boolean IsID;
-	private String jpt;
+	private boolean userActive;
+	private int userId;
 	
 	private ArrayList<String> finalSummary= new ArrayList<>();
-		
-	public String getJpt() {
-		return jpt;
+
+	public int getUserId() {
+		return userId;
 	}
-	public void setJpt(String jpt) {
-		this.jpt = jpt;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
-	public boolean isIsID() {
-		return IsID;
-	}
-	public void setIsID(boolean isID) {
-		this.IsID = isID;
-	}
-	
+
 	public ArrayList<String> getFinalSummary() {
 		return finalSummary;
 	}
@@ -42,6 +36,12 @@ public class Summary {
 	}
 	public void setSentenceNumber(int sentenceNumber) {
 		this.sentenceNumber = sentenceNumber;
+	}
+	public boolean isUserActive() {
+		return userActive;
+	}
+	public void setUserActive(boolean userActive) {
+		this.userActive = userActive;
 	}
 	public String getSourceUrl() {
 		return sourceUrl;

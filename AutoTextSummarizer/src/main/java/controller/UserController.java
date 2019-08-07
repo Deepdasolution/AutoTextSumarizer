@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import models.Summary;
 import models.User;
+import models.UserHistory;
 import repository.UserRepository;
 import services.SummaryService;
+import services.UserHistoryService;
 import services.UserService;
 import summarizer.Summarizer;
 
@@ -22,16 +24,24 @@ import summarizer.Summarizer;
 @RequestMapping("/ats")
 public class UserController {
 
-	private ArrayList<String> fs;
+	private User user;	
+	private ArrayList<String> fs;	
+	
+	
+	private UserHistory userHistory;
 	
 	@Autowired
-	UserRepository userRepository;
+	private UserHistoryService userHistoryService;
 	
 	@Autowired
-	UserService userService;
+	private UserRepository userRepository;
 	
 	@Autowired
-	SummaryService summaryService;
+	private UserService userService;
+	
+	@Autowired
+	private SummaryService summaryService;
+	private String tempSummary;
 	
 	//Select all from table
 	@GetMapping("/users")
@@ -85,17 +95,45 @@ public class UserController {
 		System.out.println("no: "+sno);
 		System.out.println("Sentence: "+source);
 		System.out.println("Url: "+url);
-		System.out.println("User login is: "+summary.isIsID());
-		System.out.println("jpt is : "+summary.getJpt());
+		System.out.println("User Login Activity: "+summary.isUserActive());
+		System.out.println("user Id is : "+summary.getUserId());
 		
 		Summarizer summarizer= new Summarizer();
 		fs= new ArrayList<>(summarizer.callSummarizer(sno, source));
 		for(String x: fs)
 		{
 			System.out.println(x);
+			tempSummary=tempSummary+x;
+			System.out.println("\t Deep: "+tempSummary);
+			
 		}
 		summary.setFinalSummary(fs);
+		System.out.println("Summary seted");
+		user= new User();
+		//Save the histroy
+		user.setId(summary.getUserId());
+		
+		System.out.println("user is seted");
+		userHistory= new UserHistory();
+		
+		userHistory.setSummary(tempSummary);
+		System.out.println("temp seted");
+		
+		userHistory.setTimeConsumed(10);
+		System.out.println("time consumed seted");
+		
+		userHistory.setUser(user);
+		System.out.println("Summary seted");
+		
+		userHistory.setSource(source);
+		System.out.println("source seted");
+		
+		userHistoryService.saveHistory(userHistory);
+		System.out.println("history saved");
+				
 		return summary;
+		
+		
 		 
 	
 	}

@@ -9,8 +9,7 @@ public class UserHistory {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	private String type;
-	private String inputText;
+	private String source;
 	private int timeConsumed;
 	private String summary;
 	
@@ -24,21 +23,13 @@ public class UserHistory {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getType() {
-		return type;
+	
+	public String getSource() {
+		return source;
 	}
 
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getInputText() {
-		return inputText;
-	}
-
-	public void setInputText(String inputText) {
-		this.inputText = inputText;
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 	public int getTimeConsumed() {

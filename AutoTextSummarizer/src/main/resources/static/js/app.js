@@ -22,6 +22,7 @@
 
   app.controller("AtsController", ['$scope', '$rootScope', '$http', '$cookies', '$cookieStore', function($scope, $rootScope,$http,$cookies,$cookieStore, $timeout){
      
+	  $rootScope.a="DeepDai";
     $rootScope.resetSession = function(){
 	        $rootScope.loggedIn = false;
 	        $rootScope.userId = false;
@@ -59,6 +60,7 @@
 	    }
      $scope.logout=function()
       {
+    	 
          	var retVal = confirm("Are You Aure to Logout ?");
                  if( retVal == true ) {
                 	 $rootScope.resetSession();
@@ -95,6 +97,7 @@
 	    console.log('Hello Log in controller!!!');
 	    $scope.userLogin=function(user)
 	    {
+	  
 	      console.log('Hello Login');
 	      var user=$scope.user;
 	      console.log(user);
@@ -205,19 +208,19 @@
       }
     };
 
-    var summaryController =  function($scope,$rootScope,$http){
+    var summaryController =  function($scope,$rootScope,$http,$cookies,$cookieStore){
 
-      $scope.source={};
-    
-      $scope.source.sentenceNumber=6;
-
+      $scope.source={};  
       $scope.getSourceContent=function()
       {
-        
         var source=$scope.source;
+       	$scope.source.userActive=$rootScope.loggedIn;
+        $scope.source.userId=$rootScope.userId;
+        
+        console.log(source);
         alert(source.sourceUrl);
         alert(source.sentenceNumber);
-       
+     
         $http({
           url: 'http://127.0.0.1:8080/ats/getcontent',
           method: "POST",
@@ -242,13 +245,13 @@
 
 
       $scope.summarizer=function()
-      {     
-    	$scope.source.IsID= $rootScope.loggedIn;//for checking user logged in or not
-        $scope.source.jpt="jpt ayo";
-    	var source=$scope.source;
-        alert(source.sentenceNumber);
-        alert(source.IsID);
-        alert(source.jpt);
+      {   
+        var source=$scope.source;
+        $scope.source.userActive=$rootScope.loggedIn; //for checking user logged in or not
+        $scope.source.userId=$rootScope.userId;
+        
+        console.log(source);
+        alert(source.userId);
         $http({
           url: 'http://127.0.0.1:8080/ats/summary',
           method: "POST",

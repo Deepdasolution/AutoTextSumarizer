@@ -12,7 +12,7 @@ import models.UserHistory;
 @Repository
 public interface UserHistoryRepository extends JpaRepository<UserHistory, Integer> {
 
-	//UserHistory findById(int id);
+	public UserHistory findById(int id);
 
 	 
 }

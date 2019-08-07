@@ -20,9 +20,14 @@ public class UserHistoryService {
         
     }
 	
-	public Optional<UserHistory> getUserHistory(int id) {
-        return userHistoryRepository.findById(id);
-    }
+//	public Optional<UserHistory> getUserHistory(int id) {
+//        return userHistoryRepository.findById(id);
+//    }
+	
+	public void saveHistory(UserHistory userHistory) {
+		userHistoryRepository.save(userHistory);
+		System.out.println("History is saved successfully");
+	}
     
 
 }
